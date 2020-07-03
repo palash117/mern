@@ -1,7 +1,6 @@
 const express = require('express');
-const connectDb = require('./config/db');
 const connectDB = require('./config/db');
-
+const userRouter = require('./routes/api/users')
 var app = express();
 
 connectDB();
@@ -11,6 +10,11 @@ app.get('/', (req, res) => {
   res.status(200);
   res.send('api running');
 });
+ 
+// DEFINE ROUTES
+// app.use('/api/users', (req, res , next)=>{ res.send('users'); next()})
+app.use('/api/users', require('./routes/api/users'))
+
 
 const PORT = process.env.PORT || 5000;
 
