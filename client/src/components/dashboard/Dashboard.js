@@ -4,7 +4,6 @@ import { getProfile } from "../../actions/profile";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../Spinner";
-
 const Dashboard = ({ getProfile, profile, error, loading, user }) => {
 	useEffect(() => {
 		getProfile();
