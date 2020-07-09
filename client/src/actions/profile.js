@@ -1,6 +1,6 @@
 import axios from "axios";
 import { setAlert } from "./alert";
-import { GET_PROFILE, PROFILE_ERROR } from "./actionTypes";
+import { GET_PROFILE, PROFILE_ERROR, CLEAR_PROFILE } from "./actionTypes";
 
 export const getProfile = () => async (dispatch) => {
 	let token = localStorage.getItem("token");
@@ -34,4 +34,7 @@ export const getProfile = () => async (dispatch) => {
 		});
 		console.log(errors);
 	}
+};
+export const clearProfile = () => (dispatch) => {
+	dispatch({ type: CLEAR_PROFILE });
 };

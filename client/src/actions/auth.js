@@ -9,6 +9,7 @@ import {
 } from "./actionTypes";
 import axios from "axios";
 import { setAlert } from "./alert";
+import { clearProfile } from "./profile";
 
 export const login = ({ email, password }) => async (dispatch) => {
 	let config = {
@@ -90,4 +91,5 @@ export const loadUser = () => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
 	dispatch({ type: LOGOUT });
+	dispatch(clearProfile());
 };
