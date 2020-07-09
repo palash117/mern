@@ -11,8 +11,10 @@ import Register from "./components/auth/Register";
 // redux
 import { Provider } from "react-redux";
 import store from "./Store";
+import { loadUser } from "./actions/auth";
 
 function App() {
+	store.dispatch(loadUser());
 	return (
 		<Provider store={store}>
 			<Router>

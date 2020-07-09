@@ -1,6 +1,41 @@
-import { REGISTRATION_FAILIURE, REGISTRATION_SUCCESS } from "./actionTypes";
+import {
+	REGISTRATION_FAILIURE,
+	REGISTRATION_SUCCESS,
+	LOGIN_FAILURE,
+	LOGIN_SUCCESS,
+	USER_LOADED,
+	USER_LOAD_FAILURE,
+	LOGOUT,
+} from "./actionTypes";
 import axios from "axios";
 import { setAlert } from "./alert";
+
+export const login = ({ email, password }) => async (dispatch) => {
+	let config = {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	};
+	try {
+		let response = await axios.post(
+			"/api/auth",
+			{ email, password },
+			config
+		);
+		if (response.status === 200) {
+			dispatch({
+				type: LOGIN_SUCCESS,
+				payload: { token: response.data },
+			});
+			dispatch(loadUser(response.data));
+		}
+	} catch (err) {
+		const errors = err.response.data.errors;
+		errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		dispatch({ type: LOGIN_FAILURE });
+		console.error(err);
+	}
+};
 
 export const register = ({ name, email, password }) => async (dispatch) => {
 	let config = {
@@ -27,4 +62,32 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 		dispatch({ type: REGISTRATION_FAILIURE });
 		console.error(err);
 	}
+};
+
+export const loadUser = () => async (dispatch) => {
+	let token = localStorage.getItem("token");
+	let config = {
+		headers: {
+			"x-auth": token,
+		},
+	};
+	try {
+		let response = await axios.get("/api/auth", config);
+		if (response.status === 200) {
+			dispatch({ type: USER_LOADED, payload: response.data });
+		} else {
+			if (response.data && response.data.errors) {
+				response.data.errors.map((err) => setAlert(err.msg, "danger"));
+			}
+		}
+	} catch (err) {
+		const errors = err.response.data.errors;
+		errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		dispatch({ type: USER_LOAD_FAILURE });
+		console.error(err);
+	}
+};
+
+export const logout = () => (dispatch) => {
+	dispatch({ type: LOGOUT });
 };

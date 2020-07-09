@@ -42,11 +42,11 @@ let auth = async (req, res) => {
 };
 
 var getUser = async (req, res) => {
-	let id = req.user.id;
-	if (id != null) {
-		let user = await Users.findById(id);
-		const { name, email } = user;
-		return res.status(200).json({ name, email });
+	let userId = req.user.id;
+	if (userId != null) {
+		let user = await Users.findById(userId);
+		const { name, email, avatar, id } = user;
+		return res.status(200).json({ name, email, avatar, id });
 	}
 
 	res.status(500).json({ errors: [{ msg: "INVALID TOKEN" }] });
