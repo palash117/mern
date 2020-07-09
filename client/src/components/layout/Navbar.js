@@ -24,7 +24,7 @@ const Navbar = ({ authState, logout }) => {
 				<Link to="#!">Developers</Link>
 			</li>
 			<li>
-				<a onClick={logout}>
+				<a href="#!" onClick={logout}>
 					<i className="fas fa-sign-out-alt"></i>
 					<span className="hide-sm"> Logout</span>
 				</a>
