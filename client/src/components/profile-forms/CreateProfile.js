@@ -1,10 +1,13 @@
 import React, { useState, Fragment } from "react";
 // import PropTypes from "prop-types";
 import { connect } from "react-redux";
+import { withRouter, Link } from "react-router-dom";
+import { createProfile } from "../../actions/profile";
+import { PropTypes } from "prop-types";
 
-export const CreateProfile = () => {
+const CreateProfile = ({ createProfile, history }) => {
 	const [state, setState] = useState({
-		skills: [],
+		skills: "",
 		company: "",
 		website: "",
 		location: "",
@@ -43,23 +46,23 @@ export const CreateProfile = () => {
 			case "twitter":
 			case "instagram":
 			case "facebook":
-				setState({
-					...state,
-					social: {
-						...state.social,
-						[e.target.name]: [e.target.value],
-					},
-				});
+				state.social[e.target.name] = e.target.value;
+				setState(state);
 			default:
 				setState({
 					...state,
-					[e.target.name]: [e.target.value],
+					[e.target.name]: e.target.value,
 				});
 		}
 		console.log(state);
 	};
 	let toggleAddSocial = () => {
 		setState({ ...state, addSocialLinks: !addSocialLinks });
+	};
+	let onsubmit = (e) => {
+		e.preventDefault();
+		let profileData = { ...state };
+		createProfile({ profileData, history });
 	};
 	return (
 		<Fragment>
@@ -238,21 +241,23 @@ export const CreateProfile = () => {
 				) : (
 					""
 				)}
-				<input type="submit" className="btn btn-primary my-1" />
-				<a className="btn btn-light my-1" href="dashboard.html">
+				<input
+					type="submit"
+					className="btn btn-primary my-1"
+					onClick={onsubmit}
+				/>
+				<Link className="btn btn-light my-1" to="/dashboard">
 					Go Back
-				</a>
+				</Link>
 			</form>
 		</Fragment>
 	);
 };
 
-// CreateProfile.propTypes = {
-// 	prop: PropTypes,
-// };
+CreateProfile.propTypes = {
+	createProfile: PropTypes.func.isRequired,
+};
 
 // const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
-
-export default connect(null, mapDispatchToProps)(CreateProfile);
+export default connect(null, { createProfile })(withRouter(CreateProfile));

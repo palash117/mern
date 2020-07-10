@@ -14,7 +14,7 @@ import { Provider } from "react-redux";
 import store from "./Store";
 import { loadUser } from "./actions/auth";
 import PrivateRoute from "./components/route/PrivateRoute";
-import { CreateProfile } from "./components/profile-forms/CreateProfile";
+import CreateProfile from "./components/profile-forms/CreateProfile";
 
 function App() {
 	store.dispatch(loadUser());
