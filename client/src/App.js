@@ -15,6 +15,7 @@ import store from "./Store";
 import { loadUser } from "./actions/auth";
 import PrivateRoute from "./components/route/PrivateRoute";
 import CreateProfile from "./components/profile-forms/CreateProfile";
+import EditProfile from "./components/profile-forms/EditProfile";
 
 function App() {
 	store.dispatch(loadUser());
@@ -43,6 +44,11 @@ function App() {
 								exact
 								path="/create-profile"
 								component={CreateProfile}
+							/>
+							<PrivateRoute
+								exact
+								path="/edit-profile"
+								component={EditProfile}
 							/>
 						</Switch>
 					</section>

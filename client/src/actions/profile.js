@@ -57,7 +57,7 @@ export const createProfile = ({ profileData, history }) => async (dispatch) => {
 			},
 		};
 		let response = await axios.post("/api/profile", profileData, config);
-		if (response && response.status == 200) {
+		if (response && response.status === 200) {
 			history.push("/dashboard");
 			dispatch({ type: CREATE_PROFILE, payload: response.data });
 		}
@@ -66,8 +66,15 @@ export const createProfile = ({ profileData, history }) => async (dispatch) => {
 		let errors = err.response.data.errors;
 		if (errors) {
 			errors.map((err) => {
-				dispatch(setAlert(err.msg, "danger"));
+				return dispatch(setAlert(err.msg, "danger"));
 			});
 		}
 	}
+};
+
+export const getCurrentProfile = () => async (dispatch) => {
+	dispatch(getProfile());
+};
+export const updateProfile = ({ profileData, history }) => async (dispatch) => {
+	dispatch(createProfile({ profileData, history }));
 };

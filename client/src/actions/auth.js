@@ -83,7 +83,9 @@ export const loadUser = () => async (dispatch) => {
 		}
 	} catch (err) {
 		const errors = err.response.data.errors;
-		errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		if (errors) {
+			errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		}
 		dispatch({ type: USER_LOAD_FAILURE });
 		console.error(err);
 	}

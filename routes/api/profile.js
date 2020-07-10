@@ -198,7 +198,7 @@ var getAllProflies = async (req, res) => {
 		res.status(500).json({ errors: [{ msg: "INTERNAL SERVER ERROR" }] });
 	}
 };
-getProfile = async (req, res) => {
+const getProfile = async (req, res) => {
 	let userId = req.user.id;
 	try {
 		let profile = await Profiles.findOne({ user: userId });
@@ -230,13 +230,9 @@ var postProfile = async (req, res) => {
 		status,
 		githubusername,
 		skills,
-		youtube,
-		facebook,
-		twitter,
-		instagram,
-		linkedin,
+		social,
 	} = req.body;
-
+	const { youtube, facebook, twitter, instagram, linkedin } = social;
 	const profileFields = {};
 	profileFields.user = req.user.id;
 	if (company) profileFields.company = company;
@@ -247,17 +243,20 @@ var postProfile = async (req, res) => {
 	if (githubusername) profileFields.githubusername = githubusername;
 	if (skills)
 		profileFields.skills = skills.split(",").map((skill) => skill.trim());
-	if (youtube) profileFields.youtube = youtube;
-	if (facebook) profileFields.facebook = facebook;
-	if (twitter) profileFields.twitter = twitter;
-	if (instagram) profileFields.instagram = instagram;
-	if (linkedin) profileFields.linkedin = linkedin;
+	if (social) {
+		profileFields.social = {};
+		if (youtube) profileFields.social.youtube = youtube;
+		if (facebook) profileFields.social.facebook = facebook;
+		if (twitter) profileFields.social.twitter = twitter;
+		if (instagram) profileFields.social.instagram = instagram;
+		if (linkedin) profileFields.social.linkedin = linkedin;
+	}
 
 	try {
 		let profile = await Profiles.findOne({ user: req.user.id });
-
+		let profileSaveData;
 		if (profile != null) {
-			Profiles.findOneAndUpdate(
+			profile = await Profiles.findOneAndUpdate(
 				{ user: req.user.id },
 				{ $set: profileFields },
 				{ new: true }
