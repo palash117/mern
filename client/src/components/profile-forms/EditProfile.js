@@ -119,7 +119,7 @@ const EditProfile = ({
 	let onsubmit = (e) => {
 		e.preventDefault();
 		let profileData = { ...formData };
-		updateProfile({ profileData, history });
+		updateProfile({ profileData, history, isEdit: true });
 	};
 	return (
 		<Fragment>

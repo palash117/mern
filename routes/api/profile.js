@@ -254,7 +254,6 @@ var postProfile = async (req, res) => {
 
 	try {
 		let profile = await Profiles.findOne({ user: req.user.id });
-		let profileSaveData;
 		if (profile != null) {
 			profile = await Profiles.findOneAndUpdate(
 				{ user: req.user.id },

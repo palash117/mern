@@ -5,10 +5,14 @@ import {
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
 	CREATE_PROFILE,
+	ADD_EDUCATION,
+	ADD_EXPERIENCE,
 } from "./actionTypes";
 
+const TOKEN = "token";
+
 export const getProfile = () => async (dispatch) => {
-	let token = localStorage.getItem("token");
+	let token = localStorage.getItem(TOKEN);
 	if (!token) {
 		dispatch(setAlert("Please login first!"), "danger");
 		return;
@@ -44,9 +48,11 @@ export const clearProfile = () => (dispatch) => {
 	dispatch({ type: CLEAR_PROFILE });
 };
 
-export const createProfile = ({ profileData, history }) => async (dispatch) => {
+export const createProfile = ({ profileData, history, isEdit }) => async (
+	dispatch
+) => {
 	try {
-		let token = localStorage.getItem("token");
+		let token = localStorage.getItem(TOKEN);
 		if (!token) {
 			return setAlert("please login first", "danger");
 		}
@@ -60,6 +66,12 @@ export const createProfile = ({ profileData, history }) => async (dispatch) => {
 		if (response && response.status === 200) {
 			history.push("/dashboard");
 			dispatch({ type: CREATE_PROFILE, payload: response.data });
+			dispatch(
+				setAlert(
+					`Profile ${isEdit ? "edited" : "created"} successfully`,
+					"success"
+				)
+			);
 		}
 	} catch (err) {
 		console.error(err);
@@ -75,6 +87,78 @@ export const createProfile = ({ profileData, history }) => async (dispatch) => {
 export const getCurrentProfile = () => async (dispatch) => {
 	dispatch(getProfile());
 };
-export const updateProfile = ({ profileData, history }) => async (dispatch) => {
-	dispatch(createProfile({ profileData, history }));
+export const updateProfile = ({ profileData, history, isEdit }) => async (
+	dispatch
+) => {
+	dispatch(createProfile({ profileData, history, isEdit }));
+};
+
+export const addEducation = ({ educationData, history }) => async (
+	dispatch
+) => {
+	try {
+		let token = localStorage.getItem(TOKEN);
+		if (!token) {
+			return setAlert("please login first", "danger");
+		}
+		let config = {
+			headers: {
+				"x-auth": token,
+				"Content-Type": "application/json",
+			},
+		};
+		let response = await axios.put(
+			"/api/profile/education",
+			educationData,
+			config
+		);
+		if (response.status === 200) {
+			dispatch({ type: ADD_EDUCATION, payload: response.data });
+			dispatch(setAlert("Educaton added successfully", "success"));
+			history.push("/dashboard");
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
+};
+
+export const addExperience = ({ experienceData, history }) => async (
+	dispatch
+) => {
+	try {
+		let token = localStorage.getItem(TOKEN);
+		if (!token) {
+			return setAlert("please login first", "danger");
+		}
+		let config = {
+			headers: {
+				"x-auth": token,
+				"Content-Type": "application/json",
+			},
+		};
+		let response = await axios.put(
+			"/api/profile/experience",
+			experienceData,
+			config
+		);
+		if (response.status === 200) {
+			dispatch({ type: ADD_EXPERIENCE, payload: response.data });
+			dispatch(setAlert("Experience added successfully", "success"));
+			history.push("/dashboard");
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
 };
