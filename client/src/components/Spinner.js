@@ -12,6 +12,7 @@ function Spinner() {
 					margin: "auto",
 					display: "block",
 				}}
+				alt="loading..."
 			></img>
 		</div>
 	);

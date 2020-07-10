@@ -15,7 +15,7 @@ export const getProfile = () => async (dispatch) => {
 			},
 		};
 		let response = await axios.get("/api/profile/me", config);
-		if (response.status == 200) {
+		if (response.status === 200) {
 			// let profileData = JSON.parse(response.data);
 			dispatch({ type: GET_PROFILE, payload: response.data });
 		}
@@ -24,7 +24,7 @@ export const getProfile = () => async (dispatch) => {
 		if (!errors || errors.length <= 0) {
 			console.log(err);
 		}
-		errors.map((err) => dispatch(setAlert(err.msg), "danger"));
+		// errors.map((err) => dispatch(setAlert(err.msg), "danger"));
 		dispatch({
 			type: PROFILE_ERROR,
 			payload: {

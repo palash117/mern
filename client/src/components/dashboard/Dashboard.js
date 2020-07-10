@@ -4,7 +4,7 @@ import { getProfile } from "../../actions/profile";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../Spinner";
-const Dashboard = ({ getProfile, profile, error, loading, user }) => {
+const Dashboard = ({ getProfile, profile, loading, user }) => {
 	useEffect(() => {
 		getProfile();
 	}, []);
@@ -35,12 +35,12 @@ const Dashboard = ({ getProfile, profile, error, loading, user }) => {
 };
 Dashboard.propTypes = {
 	getProfile: PropTypes.func.isRequired,
-	profile: PropTypes.object.isRequired,
-	error: PropTypes.object.isRequired,
+	// profile: PropTypes.object.isRequired,
+	// error: PropTypes.object.isRequired,
 };
 const mapReduxStateToProps = (reduxState) => ({
 	profile: reduxState.profile.profile,
-	error: reduxState.profile.error,
+	// error: reduxState.profile.error,
 	loading: reduxState.profile.loading,
 	user: reduxState.auth.user,
 });

@@ -10,7 +10,7 @@ const Navbar = ({ authState, logout }) => {
 			<li>
 				<Link to="/dashboard">
 					<i className="fas fa-user"></i>
-					<span class="hide-sm"> DashBoard</span>
+					<span className="hide-sm"> DashBoard</span>
 				</Link>
 			</li>
 			<li>
@@ -26,14 +26,14 @@ const Navbar = ({ authState, logout }) => {
 			<li>
 				<Link to="/dashboard">
 					<i className="fas fa-user"></i>
-					<span class="hide-sm"> DashBoard</span>
+					<span className="hide-sm"> DashBoard</span>
 				</Link>
 			</li>
 			<li>
-				<a href="#!" onClick={logout}>
+				<Link to="#!" onClick={logout}>
 					<i className="fas fa-sign-out-alt"></i>
 					<span className="hide-sm"> Logout</span>
-				</a>
+				</Link>
 			</li>
 		</ul>
 	);
