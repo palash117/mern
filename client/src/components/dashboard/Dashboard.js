@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../Spinner";
 import DashboardActions from "./DashboardActions";
+import Education from "./Education";
+import Experience from "./Experience";
 const Dashboard = ({ getProfile, profile, loading, user }) => {
 	useEffect(() => {
 		getProfile();
@@ -32,6 +34,8 @@ const Dashboard = ({ getProfile, profile, loading, user }) => {
 					</Link>
 				</Fragment>
 			)}
+			<Education educationList={profile.education} />
+			<Experience experienceList={profile.experience} />
 		</Fragment>
 	);
 };

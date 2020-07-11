@@ -5,6 +5,8 @@ import {
 	CREATE_PROFILE,
 	ADD_EDUCATION,
 	ADD_EXPERIENCE,
+	DELETE_EDUCATION,
+	DELETE_EXPERIENCE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -21,6 +23,8 @@ export default function (state = initialState, action) {
 		case CREATE_PROFILE:
 		case ADD_EDUCATION:
 		case ADD_EXPERIENCE:
+		case DELETE_EDUCATION:
+		case DELETE_EXPERIENCE:
 			return {
 				...state,
 				profile: payload,

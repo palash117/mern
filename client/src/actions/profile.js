@@ -7,6 +7,8 @@ import {
 	CREATE_PROFILE,
 	ADD_EDUCATION,
 	ADD_EXPERIENCE,
+	DELETE_EDUCATION,
+	DELETE_EXPERIENCE,
 } from "./actionTypes";
 
 const TOKEN = "token";
@@ -151,6 +153,70 @@ export const addExperience = ({ experienceData, history }) => async (
 			dispatch({ type: ADD_EXPERIENCE, payload: response.data });
 			dispatch(setAlert("Experience added successfully", "success"));
 			history.push("/dashboard");
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
+};
+
+export const deleteExperience = ({ id }) => async (dispatch) => {
+	///experience/:experience_id
+	try {
+		let token = localStorage.getItem(TOKEN);
+		if (!token) {
+			return setAlert("please login first", "danger");
+		}
+		let config = {
+			headers: {
+				"x-auth": token,
+			},
+		};
+		let response = await axios.delete(
+			`/api/profile/experience/${id}`,
+			config
+		);
+		if (response.status == 200) {
+			dispatch({ type: DELETE_EXPERIENCE, payload: response.data });
+			dispatch(setAlert("Expereince removed successfully", "success"));
+			// dispatch()
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
+};
+
+export const deleteEducation = ({ id }) => async (dispatch) => {
+	///experience/:experience_id
+	try {
+		let token = localStorage.getItem(TOKEN);
+		if (!token) {
+			return setAlert("please login first", "danger");
+		}
+		let config = {
+			headers: {
+				"x-auth": token,
+			},
+		};
+		let response = await axios.delete(
+			`/api/profile/education/${id}`,
+			config
+		);
+		if (response.status == 200) {
+			dispatch({ type: DELETE_EDUCATION, payload: response.data });
+			dispatch(setAlert("Education removed successfully", "success"));
+			// dispatch()
 		}
 	} catch (err) {
 		console.error(err);
