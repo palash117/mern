@@ -8,6 +8,7 @@ import Alert from "./components/layout/Alert";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
+import Profiles from "./components/profiles/Profiles";
 
 // redux
 import { Provider } from "react-redux";
@@ -18,6 +19,7 @@ import CreateProfile from "./components/profile-forms/CreateProfile";
 import EditProfile from "./components/profile-forms/EditProfile";
 import AddEducation from "./components/profile-forms/AddEducation";
 import AddExperience from "./components/profile-forms/AddExperience";
+import OtherProfile from "./components/otherProfile/OtherProfile";
 
 function App() {
 	store.dispatch(loadUser());
@@ -31,6 +33,15 @@ function App() {
 					<section className="container">
 						<Alert />
 						<Switch>
+							<Route
+								path="/oprofile/:id"
+								component={OtherProfile}
+							/>
+							<Route
+								path="/developers"
+								component={Profiles}
+								exact
+							/>
 							<Route
 								exact
 								path="/register"

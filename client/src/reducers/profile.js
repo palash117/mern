@@ -7,6 +7,8 @@ import {
 	ADD_EXPERIENCE,
 	DELETE_EDUCATION,
 	DELETE_EXPERIENCE,
+	GET_PROFILES,
+	CLEAR_CURRENT_PROFILE,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -45,6 +47,17 @@ export default function (state = initialState, action) {
 				error: null,
 				repos: [],
 				otherProfiles: [],
+			};
+		case CLEAR_CURRENT_PROFILE:
+			return {
+				...state,
+				profile: null,
+			};
+		case GET_PROFILES:
+			return {
+				...state,
+				profiles: payload,
+				loading: false,
 			};
 		default:
 			return state;

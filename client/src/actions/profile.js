@@ -9,6 +9,8 @@ import {
 	ADD_EXPERIENCE,
 	DELETE_EDUCATION,
 	DELETE_EXPERIENCE,
+	GET_PROFILES,
+	CLEAR_CURRENT_PROFILE,
 } from "./actionTypes";
 
 const TOKEN = "token";
@@ -48,6 +50,10 @@ export const getProfile = () => async (dispatch) => {
 };
 export const clearProfile = () => (dispatch) => {
 	dispatch({ type: CLEAR_PROFILE });
+};
+
+export const clearCurrentProfile = () => (dispatch) => {
+	dispatch({ type: CLEAR_CURRENT_PROFILE });
 };
 
 export const createProfile = ({ profileData, history, isEdit }) => async (
@@ -226,5 +232,80 @@ export const deleteEducation = ({ id }) => async (dispatch) => {
 				return dispatch(setAlert(err.msg, "danger"));
 			});
 		}
+	}
+};
+
+export const deleteAccount = ({ history }) => async (dispatch) => {
+	if (
+		!window.confirm(
+			"This can not be UNDONE, do you still wish to continue deleting your account?"
+		)
+	) {
+		return;
+	}
+	try {
+		let token = localStorage.getItem(TOKEN);
+		if (!token) {
+			return setAlert("please login first", "danger");
+		}
+		let config = {
+			headers: {
+				"x-auth": token,
+			},
+		};
+		let response = await axios.delete("/api/profile/", config);
+		if (response.status === 204) {
+			dispatch(clearProfile());
+			dispatch(setAlert("Account deleted successfuly", "success"));
+			history.push("/");
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
+};
+export const getProfiles = () => async (dispatch) => {
+	try {
+		let response = await axios.get("/api/profile/");
+		if (response.status === 200) {
+			dispatch({ type: GET_PROFILES, payload: response.data });
+		}
+	} catch (err) {
+		console.error(err);
+		let errors = err.response.data.errors;
+		if (errors) {
+			errors.map((err) => {
+				return dispatch(setAlert(err.msg, "danger"));
+			});
+		}
+	}
+};
+
+export const getProfileById = (id) => async (dispatch) => {
+	try {
+		let response = await axios.get(`/api/profile/user/${id}`);
+		if (response.status === 200) {
+			// let profileData = JSON.parse(response.data);
+			dispatch({ type: GET_PROFILE, payload: response.data });
+		}
+	} catch (err) {
+		let errors = err.response.data.errors;
+		if (!errors || errors.length <= 0) {
+			console.log(err);
+		}
+		// errors.map((err) => dispatch(setAlert(err.msg), "danger"));
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+		console.log(errors);
 	}
 };

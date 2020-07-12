@@ -23,7 +23,16 @@ const Dashboard = ({ getProfile, profile, loading, user }) => {
 			</p>
 
 			{profile !== null ? (
-				<DashboardActions />
+				<Fragment>
+					<DashboardActions />
+					{profile.education && (
+						<Education educationList={profile.education} />
+					)}
+
+					{profile.experience && (
+						<Experience experienceList={profile.experience} />
+					)}
+				</Fragment>
 			) : (
 				<Fragment>
 					<p>
@@ -34,8 +43,6 @@ const Dashboard = ({ getProfile, profile, loading, user }) => {
 					</Link>
 				</Fragment>
 			)}
-			<Education educationList={profile.education} />
-			<Experience experienceList={profile.experience} />
 		</Fragment>
 	);
 };

@@ -95,3 +95,7 @@ export const logout = () => (dispatch) => {
 	dispatch({ type: LOGOUT });
 	dispatch(clearProfile());
 };
+
+export const deleteUser = () => (dispatch) => {
+	dispatch({ type: LOGOUT });
+};

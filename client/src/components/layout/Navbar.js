@@ -8,6 +8,9 @@ const Navbar = ({ authState, logout }) => {
 	const guestLinks = (
 		<ul>
 			<li>
+				<Link to="/developers">Developers</Link>
+			</li>
+			<li>
 				<Link to="/dashboard">
 					<i className="fas fa-user"></i>
 					<span className="hide-sm"> DashBoard</span>
@@ -23,6 +26,9 @@ const Navbar = ({ authState, logout }) => {
 	);
 	const userLinks = (
 		<ul>
+			<li>
+				<Link to="/developers">Developers</Link>
+			</li>
 			<li>
 				<Link to="/dashboard">
 					<i className="fas fa-user"></i>
