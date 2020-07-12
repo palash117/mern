@@ -32,7 +32,7 @@ function SingleProfile({
 				<ul>
 					{skills.slice(0, 4).map((skill, index) => (
 						<li className="text-primary" key={index}>
-							<i className="fase fa-check">{skill}</i>
+							<i className="fa fa-check"> {skill}</i>
 						</li>
 					))}
 				</ul>
