@@ -32,7 +32,9 @@ export const login = ({ email, password }) => async (dispatch) => {
 		}
 	} catch (err) {
 		const errors = err.response.data.errors;
-		errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		if (errors) {
+			errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		}
 		dispatch({ type: LOGIN_FAILURE });
 		console.error(err);
 	}
@@ -59,7 +61,9 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 		}
 	} catch (err) {
 		const errors = err.response.data.errors;
-		errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		if (errors) {
+			errors.forEach((err) => dispatch(setAlert(err.msg, "danger")));
+		}
 		dispatch({ type: REGISTRATION_FAILIURE });
 		console.error(err);
 	}
@@ -67,6 +71,9 @@ export const register = ({ name, email, password }) => async (dispatch) => {
 
 export const loadUser = () => async (dispatch) => {
 	let token = localStorage.getItem("token");
+	if (!token) {
+		return dispatch({ type: USER_LOAD_FAILURE });
+	}
 	let config = {
 		headers: {
 			"x-auth": token,

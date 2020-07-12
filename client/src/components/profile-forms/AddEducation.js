@@ -88,7 +88,7 @@ export const AddEducation = ({ addEducation, history }) => {
 					<input
 						type="date"
 						name="to"
-						value={from}
+						value={to}
 						onChange={onchange}
 					/>
 				</div>

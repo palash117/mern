@@ -11,6 +11,8 @@ import {
 	DELETE_EXPERIENCE,
 	GET_PROFILES,
 	CLEAR_CURRENT_PROFILE,
+	GET_GITHUB_REPOS_ERROR,
+	GET_GITHUB_REPOS,
 } from "./actionTypes";
 
 const TOKEN = "token";
@@ -306,6 +308,29 @@ export const getProfileById = (id) => async (dispatch) => {
 				status: err.response.status,
 			},
 		});
+		console.log(errors);
+	}
+};
+export const getGithubRepos = (username) => async (dispatch) => {
+	try {
+		let response = await axios.get(`/api/profile/githubRepos/${username}`);
+		if (response.status === 200) {
+			// let profileData = JSON.parse(response.data);
+			dispatch({ type: GET_GITHUB_REPOS, payload: response.data });
+		}
+	} catch (err) {
+		let errors = err.response.data.errors;
+		if (errors && errors.length >= 0) {
+			dispatch({
+				type: GET_GITHUB_REPOS_ERROR,
+				payload: err[0].msg,
+			});
+		} else {
+			dispatch({
+				type: GET_GITHUB_REPOS_ERROR,
+				payload: "UNABLE TO FETCH REPOS",
+			});
+		}
 		console.log(errors);
 	}
 };

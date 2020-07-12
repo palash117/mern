@@ -9,6 +9,8 @@ import {
 	DELETE_EXPERIENCE,
 	GET_PROFILES,
 	CLEAR_CURRENT_PROFILE,
+	GET_GITHUB_REPOS,
+	GET_GITHUB_REPOS_ERROR,
 } from "../actions/actionTypes";
 
 const initialState = {
@@ -17,6 +19,7 @@ const initialState = {
 	repos: [],
 	loading: true,
 	error: null,
+	githubFetchError: null,
 };
 export default function (state = initialState, action) {
 	const { type, payload } = action;
@@ -32,6 +35,7 @@ export default function (state = initialState, action) {
 				profile: payload,
 				loading: false,
 				error: null,
+				githubFetchError: null,
 			};
 		case PROFILE_ERROR:
 			return {
@@ -47,11 +51,13 @@ export default function (state = initialState, action) {
 				error: null,
 				repos: [],
 				otherProfiles: [],
+				githubFetchError: null,
 			};
 		case CLEAR_CURRENT_PROFILE:
 			return {
 				...state,
 				profile: null,
+				githubFetchError: null,
 			};
 		case GET_PROFILES:
 			return {
@@ -59,6 +65,19 @@ export default function (state = initialState, action) {
 				profiles: payload,
 				loading: false,
 			};
+		case GET_GITHUB_REPOS:
+			return {
+				...state,
+				repos: payload,
+				githubFetchError: null,
+			};
+		case GET_GITHUB_REPOS_ERROR:
+			return {
+				...state,
+				repos: null,
+				githubFetchError: payload,
+			};
+
 		default:
 			return state;
 	}

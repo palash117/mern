@@ -242,7 +242,10 @@ var postProfile = async (req, res) => {
 	if (status) profileFields.status = status;
 	if (githubusername) profileFields.githubusername = githubusername;
 	if (skills)
-		profileFields.skills = skills.split(",").map((skill) => skill.trim());
+		profileFields.skills = skills
+			.split(",")
+			.map((skill) => skill.trim())
+			.filter((skill) => skill && skill !== "");
 	if (social) {
 		profileFields.social = {};
 		if (youtube) profileFields.social.youtube = youtube;
