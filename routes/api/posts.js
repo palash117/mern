@@ -4,7 +4,6 @@ const Users = require("../../models/Users");
 const Posts = require("../../models/Posts");
 const { check, validationResult } = require("express-validator");
 const authentication = require("../middleware/auth");
-const { reset } = require("nodemon");
 const { DISLIKE } = require("../../util/LikeType");
 const Likes = require("../../models/Like");
 const LikeType = require("../../util/LikeType");
