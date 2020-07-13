@@ -5,6 +5,7 @@ import { login } from "../../actions/auth";
 import PropTypes from "prop-types";
 
 const Login = ({ login, isAuthenticated }) => {
+	console.log("visited login");
 	const [formData, setFormData] = useState({
 		email: "",
 		password: "",

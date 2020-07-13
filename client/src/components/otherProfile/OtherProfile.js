@@ -1,5 +1,4 @@
 import React, { Component, useEffect, Fragment } from "react";
-import PropTypes from "prop-types";
 import { getProfileById } from "../../actions/profile";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";

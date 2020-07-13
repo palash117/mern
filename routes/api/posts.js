@@ -151,10 +151,15 @@ const getChildPosts = async (req, res) => {
 	}
 	let parentPostId = req.params.post_id;
 	try {
+		const post = await Posts.findById(parentPostId);
 		const posts = await Posts.find({ parent: parentPostId })
 			.limit(pageSize)
 			.skip((pageNo - 1) * pageSize);
-		return res.json(posts);
+		const response = {
+			parentPost: post,
+			children: posts,
+		};
+		return res.json(response);
 	} catch (err) {
 		console.error(err);
 		return res
@@ -204,7 +209,7 @@ const likePost = async (req, res) => {
 			await post.save();
 			await like.save();
 		}
-		return res.status(204).json();
+		return res.status(200).json(post);
 	} catch (err) {
 		console.error(err);
 		return res
@@ -254,7 +259,7 @@ const dislikePost = async (req, res) => {
 			await post.save();
 			await like.save();
 		}
-		return res.status(204).json();
+		return res.status(200).json(post);
 	} catch (err) {
 		console.error(err);
 		return res

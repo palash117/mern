@@ -20,6 +20,8 @@ import EditProfile from "./components/profile-forms/EditProfile";
 import AddEducation from "./components/profile-forms/AddEducation";
 import AddExperience from "./components/profile-forms/AddExperience";
 import OtherProfile from "./components/otherProfile/OtherProfile";
+import Posts from "./components/posts/Posts";
+import SinglePost from "./components/posts/SinglePost";
 
 function App() {
 	store.dispatch(loadUser());
@@ -47,11 +49,17 @@ function App() {
 								path="/register"
 								component={Register}
 							/>
+							<Route path="/posts" component={Posts} exact />
 							<Route exact path="/login" component={Login} />
 							<PrivateRoute
 								exact
 								path="/dashboard"
 								component={Dashboard}
+							/>
+							<Route
+								exact
+								path="/opost/:id"
+								component={SinglePost}
 							/>
 							<PrivateRoute
 								exact

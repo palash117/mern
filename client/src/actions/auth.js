@@ -98,9 +98,10 @@ export const loadUser = () => async (dispatch) => {
 	}
 };
 
-export const logout = () => (dispatch) => {
+export const logout = (history) => (dispatch) => {
 	dispatch({ type: LOGOUT });
 	dispatch(clearProfile());
+	history.push("/");
 };
 
 export const deleteUser = () => (dispatch) => {

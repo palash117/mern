@@ -64,7 +64,7 @@ export const createProfile = ({ profileData, history, isEdit }) => async (
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		const config = {
 			headers: {
@@ -109,7 +109,7 @@ export const addEducation = ({ educationData, history }) => async (
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		let config = {
 			headers: {
@@ -144,7 +144,7 @@ export const addExperience = ({ experienceData, history }) => async (
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		let config = {
 			headers: {
@@ -178,7 +178,7 @@ export const deleteExperience = ({ id }) => async (dispatch) => {
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		let config = {
 			headers: {
@@ -210,7 +210,7 @@ export const deleteEducation = ({ id }) => async (dispatch) => {
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		let config = {
 			headers: {
@@ -248,7 +248,7 @@ export const deleteAccount = ({ history }) => async (dispatch) => {
 	try {
 		let token = localStorage.getItem(TOKEN);
 		if (!token) {
-			return setAlert("please login first", "danger");
+			return dispatch(setAlert("please login first", "danger"));
 		}
 		let config = {
 			headers: {
